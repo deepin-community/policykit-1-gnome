@@ -1,4 +1,16 @@
 #!/usr/bin/make -f
 
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-z,defs
+
 %:
 	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		--disable-examples \
+		--enable-gtk-doc \
+		--disable-introspection \
+		--libexecdir=/usr/lib/policykit-1-gnome \
+		${NULL}
+
+override_dh_auto_test:
